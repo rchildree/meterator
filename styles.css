@@ -1,0 +1,351 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif,-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue';
+    display: flex;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.button-row {
+    display: flex;
+    gap: 8px;
+}
+
+.button-row button {
+    flex: 1;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+button svg {
+    flex-shrink: 0;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.primary-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.danger-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.secondary-btn {
+    background-color: #95a5a6;
+    color: white;
+}
+
+#text-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.text-list-item-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.text-item {
+    flex: 1;
+    padding: 8px;
+    background-color: #34495e;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-item:hover {
+    background-color: #4a5f7f;
+}
+
+.text-item.active {
+    background-color: #3498db;
+}
+
+.delete-icon {
+    flex-shrink: 0;
+    color: #95a5a6;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+    user-select: none;
+}
+
+.delete-icon:hover {
+    color: #e74c3c;
+}
+
+#main-content {
+    flex: 1;
+    padding: 0;
+    overflow-y: auto;
+    background-color: white;
+    scroll-behavior: smooth;
+}
+
+#editor-container {
+    background-color: white;
+    padding: 50vh 30px;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+#instructions {
+    background-color: #ecf0f1;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#paste-area {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 2px dashed #bdc3c7;
+    border-radius: 4px;
+    font-family: 'VCTR Mono v0.12', 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+#paste-area:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.paste-section {
+    margin-bottom: 15px;
+}
+
+.paste-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #7f8c8d;
+}
+
+.paste-section.hidden {
+    display: none;
+}
+
+#instructions.hidden {
+    display: none;
+}
+
+.help-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+    z-index: 1000;
+}
+
+.help-button:hover {
+    background-color: #2980b9;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #7f8c8d;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #2c3e50;
+}
+
+.text-line {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.marks-row {
+    height: 30px;
+    margin-bottom: 0px;
+    position: relative;
+    white-space: pre;
+    letter-spacing: 0;
+    font-family: 'VCTR Mono v0.12', 'Courier New', monospace;
+    font-size: 21px;
+    color: #6ba3d4;
+}
+
+.marks-row.greek {
+    font-family: 'Fira Code', 'Noto Sans Mono', 'Source Code Pro', 'DejaVu Sans Mono', 'Courier New', monospace;
+}
+
+.mark {
+    display: inline-block;
+    width: 1ch;
+    text-align: center;
+}
+
+.mark.active {
+    background-color: #fff3cd;
+    border: 2px solid #ffc107;
+}
+
+.mark.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.meter-selector {
+    margin-bottom: 3rem;
+}
+
+.meter-selector label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #7f8c8d;
+    font-weight: bold;
+}
+
+.meter-selector select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+}
+
+.text-row {
+    white-space: pre;
+    letter-spacing: 0;
+    font-size: 21px;
+    color: #2c3e50;
+    font-family: 'VCTR Mono v0.12', 'Courier New', monospace;
+}
+
+.text-row.greek {
+    font-family: 'Fira Code', 'Noto Sans Mono', 'Source Code Pro', 'DejaVu Sans Mono', 'Courier New', monospace;
+}
+
+#file-input {
+    display: none;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7f8c8d;
+}
+
+.empty-state h3 {
+    margin-bottom: 10px;
+    color: #95a5a6;
+}
+
+#current-text-name {
+    font-size: 14px;
+    color: #bdc3c7;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+}
