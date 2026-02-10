@@ -183,7 +183,6 @@ button:hover {
 	border-color: #3498db;
 }
 
-
 #instructions.hidden {
 	display: none;
 }
@@ -272,7 +271,7 @@ button:hover {
 	white-space: pre;
 	letter-spacing: 0;
 	font-family: "VCTR Mono v0.12", "Inconsolata", "Courier New", monospace;
-	font-weight: 650;
+	font-weight: 600;
 	font-size: 21px;
 	color: #6ba3d4;
 }
@@ -328,7 +327,7 @@ button:hover {
 	font-size: 21px;
 	color: #2c3e50;
 	font-family: "VCTR Mono v0.12", "Inconsolata", "Courier New", monospace;
-	font-weight: 450;
+	font-weight: 400;
 }
 
 .text-row.greek {
