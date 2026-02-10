@@ -1,13 +1,6 @@
-# (IN)NUMERI! - Syllable Length Marker
+# Meterator - scansion marker
 
-A web application for marking syllable lengths in classical Latin and Ancient Greek poetry.
-
-## Files
-
-- **index.html** - Main HTML structure
-- **styles.css** - All styling and layout
-- **script.js** - Application logic and functionality
-- **syllable-marker.html** - Original single-file version (kept for backup)
+A webapp for marking syllable lengths in Latin and Ancient Greek poetry.
 
 ## Features
 
@@ -18,22 +11,3 @@ A web application for marking syllable lengths in classical Latin and Ancient Gr
 - Error checking for dactylic and iambo-trochaic meters
 - LocalStorage for persistent data
 - Automatic font switching (Fira Code for Greek text)
-
-## Deployment
-
-To deploy online:
-1. Upload `index.html`, `styles.css`, and `script.js` to your web server
-2. Ensure all three files are in the same directory
-3. Access via `index.html`
-
-The app uses:
-- Google Fonts (Fira Code) - loaded from CDN
-- LocalStorage for data persistence
-- No backend required - fully client-side
-
-## Usage
-
-Open `index.html` in a web browser. The application works entirely client-side, so it can be:
-- Hosted on any static web server
-- Opened directly from the filesystem
-- Deployed to GitHub Pages, Netlify, Vercel, etc.
