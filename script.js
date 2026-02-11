@@ -449,9 +449,18 @@ function renderEditor() {
 
 		lineData.positions.forEach((pos, posIndex) => {
 			// Add spaces/tabs before this mark to match the text
+			// Skip combining characters (they don't take up space)
 			let spacing = "";
 			for (let i = lastIndex; i < pos.index; i++) {
-				spacing += lineData.lineText[i] === "\t" ? "\t" : " ";
+				const char = lineData.lineText[i];
+				// Check if it's a combining character (U+0300–U+036F and other combining ranges)
+				const isCombining =
+					/[\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/.test(
+						char,
+					);
+				if (!isCombining) {
+					spacing += char === "\t" ? "\t" : " ";
+				}
 			}
 			markHtml += spacing;
 
