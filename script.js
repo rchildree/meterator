@@ -61,6 +61,7 @@ function uploadText() {
 
 function cleanText(text) {
 	// Split by lines, filter out empty lines, then rejoin
+	// Preserve tabs so scansion marks line up with input
 	return text
 		.split("\n")
 		.filter((line) => line.trim().length > 0)
@@ -447,9 +448,12 @@ function renderEditor() {
 		let lastIndex = 0;
 
 		lineData.positions.forEach((pos, posIndex) => {
-			// Add spaces before this mark
-			const spaces = " ".repeat(pos.index - lastIndex);
-			markHtml += spaces;
+			// Add spaces/tabs before this mark to match the text
+			let spacing = "";
+			for (let i = lastIndex; i < pos.index; i++) {
+				spacing += lineData.lineText[i] === "\t" ? "\t" : " ";
+			}
+			markHtml += spacing;
 
 			// Get the mark for this position
 			const markKey = `${lineIndex}-${posIndex}`;
