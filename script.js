@@ -677,7 +677,51 @@
         function downloadCurrent() {
             if (!currentText) return;
 
-            const blob = new Blob([currentText.content], { type: 'text/plain' });
+            // Build the marked text (same as copyCurrent)
+            let output = '';
+
+            syllablePositions.forEach((lineData, lineIndex) => {
+                // Build marks line
+                let marksLine = '';
+                let lastIndex = 0;
+
+                lineData.positions.forEach((pos, posIndex) => {
+                    // Add spaces before this mark
+                    const spaces = ' '.repeat(pos.index - lastIndex);
+                    marksLine += spaces;
+
+                    // Get the mark for this position
+                    const markKey = `${lineIndex}-${posIndex}`;
+                    const markValue = currentText.marks[markKey] || '';
+
+                    let displayMark = '';
+                    if (markValue === '-') {
+                        displayMark = '\u2012'; // Figure dash
+                    } else if (markValue === 'u') {
+                        displayMark = '\u222A'; // Cup
+                    } else if (markValue === 'x') {
+                        displayMark = '\u00D7'; // Multiplication sign
+                    } else if (markValue) {
+                        displayMark = markValue;
+                    } else {
+                        displayMark = ' ';
+                    }
+
+                    marksLine += displayMark;
+                    lastIndex = pos.index + 1;
+                });
+
+                // Add both lines to output
+                output += marksLine + '\n';
+                output += lineData.lineText + '\n';
+
+                // Add blank line between stanzas
+                if (lineIndex < syllablePositions.length - 1) {
+                    output += '\n';
+                }
+            });
+
+            const blob = new Blob([output], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
