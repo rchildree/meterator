@@ -294,12 +294,6 @@ button:hover {
 	color: #6ba3d4;
 }
 
-.marks-row.greek {
-	font-family:
-		"Fira Code", "Noto Sans Mono", "Source Code Pro", "DejaVu Sans Mono",
-		"Courier New", monospace;
-}
-
 .mark {
 	display: inline-block;
 	width: 1ch;
@@ -346,12 +340,6 @@ button:hover {
 	color: #2c3e50;
 	font-family: "Iosevka", "Inconsolata", "Courier New", monospace;
 	font-weight: 400;
-}
-
-.text-row.greek {
-	font-family:
-		"Fira Code", "Noto Sans Mono", "Source Code Pro", "DejaVu Sans Mono",
-		"Courier New", monospace;
 }
 
 #file-input {
