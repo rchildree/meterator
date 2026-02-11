@@ -173,7 +173,7 @@ button:hover {
 	padding: 15px;
 	border: 2px solid #bdc3c7;
 	border-radius: 4px;
-	font-family: "VCTR Mono v0.12", "Courier New", monospace;
+	font-family: "Iosevka Custom", "Courier New", monospace;
 	font-size: 14px;
 	resize: vertical;
 }
@@ -270,7 +270,7 @@ button:hover {
 	position: relative;
 	white-space: pre;
 	letter-spacing: 0;
-	font-family: "VCTR Mono v0.12", "Inconsolata", "Courier New", monospace;
+	font-family: "Iosevka Custom", "Inconsolata", "Courier New", monospace;
 	font-weight: 600;
 	font-size: 21px;
 	color: #6ba3d4;
@@ -326,7 +326,7 @@ button:hover {
 	letter-spacing: 0;
 	font-size: 21px;
 	color: #2c3e50;
-	font-family: "VCTR Mono v0.12", "Inconsolata", "Courier New", monospace;
+	font-family: "Iosevka Custom", "Inconsolata", "Courier New", monospace;
 	font-weight: 400;
 }
 
