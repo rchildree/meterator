@@ -291,7 +291,7 @@ button:hover {
 	font-family: "Iosevka", "Inconsolata", "Courier New", monospace;
 	font-weight: 600;
 	font-size: 21px;
-	color: #6ba3d4;
+	color: #3498db;
 }
 
 .mark {
@@ -300,9 +300,15 @@ button:hover {
 	text-align: center;
 }
 
+.mark.empty {
+	/*background-color: #cdebff;*/
+	border-bottom: 1.5px dotted #3498db;
+}
+
 .mark.active {
 	background-color: #fff3cd;
 	outline: 2px solid #ffc107;
+	border-bottom: none;
 }
 
 .mark.error {

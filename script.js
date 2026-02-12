@@ -472,6 +472,7 @@ function renderEditor() {
 
 			// Display the mark
 			let displayMark = "";
+			let isEmpty = false;
 			if (markValue === "-") {
 				displayMark = "\u2012"; // Figure dash
 			} else if (markValue === "u") {
@@ -482,13 +483,15 @@ function renderEditor() {
 				displayMark = markValue;
 			} else {
 				displayMark = " ";
+				isEmpty = true;
 			}
 
 			// Check for errors
 			const hasError = checkForError(lineIndex, posIndex);
 			const errorClass = hasError ? "error" : "";
+			const emptyClass = isEmpty ? "empty" : "";
 
-			markHtml += `<span class="mark ${isActive ? "active" : ""} ${errorClass}" data-line="${lineIndex}" data-pos="${posIndex}">${displayMark}</span>`;
+			markHtml += `<span class="mark ${isActive ? "active" : ""} ${errorClass} ${emptyClass}" data-line="${lineIndex}" data-pos="${posIndex}">${displayMark}</span>`;
 			lastIndex = pos.index + 1;
 		});
 
@@ -854,9 +857,17 @@ function downloadCurrent() {
 		let lastIndex = 0;
 
 		lineData.positions.forEach((pos, posIndex) => {
-			// Add spaces before this mark
-			const spaces = " ".repeat(pos.index - lastIndex);
-			marksLine += spaces;
+			// Add the actual characters (including tabs) before this mark
+			const charsBeforeMark = lineData.lineText.substring(
+				lastIndex,
+				pos.index,
+			);
+			// Replace each character with space, but preserve tabs
+			const spacing = charsBeforeMark
+				.split("")
+				.map((c) => (c === "\t" ? "\t" : " "))
+				.join("");
+			marksLine += spacing;
 
 			// Get the mark for this position
 			const markKey = `${lineIndex}-${posIndex}`;
@@ -979,9 +990,17 @@ function copyCurrent() {
 		let lastIndex = 0;
 
 		lineData.positions.forEach((pos, posIndex) => {
-			// Add spaces before this mark
-			const spaces = " ".repeat(pos.index - lastIndex);
-			marksLine += spaces;
+			// Add the actual characters (including tabs) before this mark
+			const charsBeforeMark = lineData.lineText.substring(
+				lastIndex,
+				pos.index,
+			);
+			// Replace each character with space, but preserve tabs
+			const spacing = charsBeforeMark
+				.split("")
+				.map((c) => (c === "\t" ? "\t" : " "))
+				.join("");
+			marksLine += spacing;
 
 			// Get the mark for this position
 			const markKey = `${lineIndex}-${posIndex}`;
