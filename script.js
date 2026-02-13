@@ -15,7 +15,7 @@ const SYMBOL_MAP = {
 // Vowels and common diphthongs for auto-detection
 // Includes Latin vowels (with macrons) and Ancient Greek vowels (with all diacritics)
 const VOWEL_PATTERN =
-	/[aeiouyæœāēīōūȳĀĒĪŌŪȲăĕĭŏŭĂĔĬŎŬαεηιουωἀἁἂἃἄἅἆἇὀὁὂὃὄὅἐἑἒἓἔἕἠἡἢἣἤἥἦἧἰἱἲἳἴἵἶἷὐὑὒὓὔὕὖὗὠὡὢὣὤὥὦὧᾀᾁᾂᾃᾄᾅᾆᾇᾐᾑᾒᾓᾔᾕᾖᾗᾠᾡᾢᾣᾤᾥᾦᾧὰάᾰᾱᾲᾳᾴᾶᾷὲέὴήῂῃῄῆῇὶίῐῑῒΐῖῗὀόὸόὺύῠῡῢΰῦῧὼώῲῳῴῶῷ]/i;
+	/[aeiouyæœāēīōūȳĀĒĪŌŪȲăĕĭŏŭĂĔĬŎŬâêîôûŷÂÊÎÔÛŶαεηιουωἀἁἂἃἄἅἆἇὀὁὂὃὄὅἐἑἒἓἔἕἠἡἢἣἤἥἦἧἰἱἲἳἴἵἶἷὐὑὒὓὔὕὖὗὠὡὢὣὤὥὦὧᾀᾁᾂᾃᾄᾅᾆᾇᾐᾑᾒᾓᾔᾕᾖᾗᾠᾡᾢᾣᾤᾥᾦᾧὰάᾰᾱᾲᾳᾴᾶᾷὲέὴήῂῃῄῆῇὶίῐῑῒΐῖῗὀόὸόὺύῠῡῢΰῦῧὼώῲῳῴῶῷ]/i;
 // Latin: ae, au
 // Greek: αι, ει, οι, υι, αυ, ευ, ου, ηυ (and with diacritics)
 const DIPHTHONG_PATTERN =
@@ -909,7 +909,7 @@ function downloadCurrent() {
 	const minutes = String(now.getMinutes()).padStart(2, '0');
 	const seconds = String(now.getSeconds()).padStart(2, '0');
 	const timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
-	
+
 	const filename = `${timestamp}_${currentText.name}`;
 
 	const blob = new Blob([output], { type: "text/plain" });
