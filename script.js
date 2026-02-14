@@ -15,7 +15,7 @@ const SYMBOL_MAP = {
 // Vowels and common diphthongs for auto-detection
 // Includes Latin vowels (with macrons) and Ancient Greek vowels (with all diacritics)
 const VOWEL_PATTERN =
-	/[aeiouyæœāēīōūȳĀĒĪŌŪȲăĕĭŏŭĂĔĬŎŬâêîôûŷÂÊÎÔÛŶαεηιουωἀἁἂἃἄἅἆἇὀὁὂὃὄὅἐἑἒἓἔἕἠἡἢἣἤἥἦἧἰἱἲἳἴἵἶἷὐὑὒὓὔὕὖὗὠὡὢὣὤὥὦὧᾀᾁᾂᾃᾄᾅᾆᾇᾐᾑᾒᾓᾔᾕᾖᾗᾠᾡᾢᾣᾤᾥᾦᾧὰάᾰᾱᾲᾳᾴᾶᾷὲέὴήῂῃῄῆῇὶίῐῑῒΐῖῗὀόὸόὺύῠῡῢΰῦῧὼώῲῳῴῶῷ]/i;
+	/[aeiouyæœāēīōūȳĀĒĪŌŪȲăĕĭŏŭĂĔĬŎŬâêîôûŷÂÊÎÔÛŶäëïöüÿÄËÏÖÜŸαεηιουωἀἁἂἃἄἅἆἇὀὁὂὃὄὅἐἑἒἓἔἕἠἡἢἣἤἥἦἧἰἱἲἳἴἵἶἷὐὑὒὓὔὕὖὗὠὡὢὣὤὥὦὧᾀᾁᾂᾃᾄᾅᾆᾇᾐᾑᾒᾓᾔᾕᾖᾗᾠᾡᾢᾣᾤᾥᾦᾧὰάᾰᾱᾲᾳᾴᾶᾷὲέὴήῂῃῄῆῇὶίῐῑῒΐῖῗὀόὸόὺύῠῡῢΰῦῧὼώῲῳῴῶῷ]/i;
 // Latin: ae, au
 // Greek: αι, ει, οι, υι, αυ, ευ, ου, ηυ (and with diacritics)
 const DIPHTHONG_PATTERN =
