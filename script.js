@@ -369,6 +369,8 @@ function isTrueDiphthong(char1, char2, fullString, position) {
 
 function parseTextForSyllables(text) {
 	syllablePositions = [];
+	// Normalize to NFC (precomposed form) to ensure consistent vowel matching
+	text = text.normalize('NFC');
 	const lines = text.split("\n");
 
 	lines.forEach((line, lineIndex) => {
