@@ -461,7 +461,12 @@ function renderEditor() {
 						char,
 					);
 				if (!isCombining) {
-					spacing += char === "\t" ? "\t" : " ";
+					// Treat emdash as two spaces
+					if (char === "—") {
+						spacing += "  ";
+					} else {
+						spacing += char === "\t" ? "\t" : " ";
+					}
 				}
 			}
 			markHtml += spacing;
@@ -864,10 +869,10 @@ function downloadCurrent() {
 				lastIndex,
 				pos.index,
 			);
-			// Replace each character with space, but preserve tabs
+			// Replace each character with space, but preserve tabs and treat emdashes as two spaces
 			const spacing = charsBeforeMark
 				.split("")
-				.map((c) => (c === "\t" ? "\t" : " "))
+				.map((c) => (c === "\t" ? "\t" : c === "—" ? "  " : " "))
 				.join("");
 			marksLine += spacing;
 
@@ -1009,10 +1014,10 @@ function copyCurrent() {
 				lastIndex,
 				pos.index,
 			);
-			// Replace each character with space, but preserve tabs
+			// Replace each character with space, but preserve tabs and treat emdashes as two spaces
 			const spacing = charsBeforeMark
 				.split("")
-				.map((c) => (c === "\t" ? "\t" : " "))
+				.map((c) => (c === "\t" ? "\t" : c === "—" ? "  " : " "))
 				.join("");
 			marksLine += spacing;
 
