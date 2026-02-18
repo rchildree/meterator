@@ -1,19 +1,19 @@
 @font-face {
-	font-family: "Iosevka";
+	font-family: "Jules";
 	font-display: swap;
 	font-weight: 400;
 	font-stretch: normal;
 	font-style: normal;
-	src: url("font/IosevkaCustom-Regular.woff2") format("woff2");
+	src: url("font/JuliaMono-Regular.woff2") format("woff2");
 }
 
 @font-face {
-	font-family: "Iosevka";
+	font-family: "Jules";
 	font-display: swap;
 	font-weight: 800;
 	font-stretch: normal;
 	font-style: normal;
-	src: url("font/IosevkaCustom-ExtraBold.woff2") format("woff2");
+	src: url("font/JuliaMono-ExtraBold.woff2") format("woff2");
 }
 
 * {
@@ -191,7 +191,7 @@ button:hover {
 	padding: 15px;
 	border: 2px solid #bdc3c7;
 	border-radius: 4px;
-	font-family: "Iosevka", "Courier New", monospace;
+	font-family: "Jules", monospace;
 	font-size: 14px;
 	resize: vertical;
 }
@@ -288,7 +288,7 @@ button:hover {
 	position: relative;
 	white-space: pre;
 	letter-spacing: 0;
-	font-family: "Iosevka", "Inconsolata", "Courier New", monospace;
+	font-family: "Jules", "Courier New", monospace;
 	font-weight: 600;
 	font-size: 21px;
 	color: #3498db;
@@ -344,7 +344,7 @@ button:hover {
 	letter-spacing: 0;
 	font-size: 21px;
 	color: #2c3e50;
-	font-family: "Iosevka", "Inconsolata", "Courier New", monospace;
+	font-family: "Jules", "Courier New", monospace;
 	font-weight: 400;
 }
 
