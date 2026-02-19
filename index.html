@@ -40,18 +40,19 @@
 			<div id="text-list"></div>
 
 			<input type="file" id="file-input" accept=".txt" onchange="handleFileUpload(event)"/>
+
+			<div class="meter-selector" id="meter-selector" style="display: none">
+				<label>For simple error-checking, select meter</label>
+				<select id="meter-type" onchange="changeMeter()">
+					<option value="other">Other (no checking)</option>
+					<option value="dactylic">Dactylic</option>
+					<option value="iambo-trochaic">Iambo-trochaic</option>
+				</select>
+			</div>
 		</div>
 
 		<div id="main-content">
 			<div id="editor-container">
-				<div class="meter-selector" id="meter-selector" style="display: none">
-					<label>For simple error-checking, select meter</label>
-					<select id="meter-type" onchange="changeMeter()">
-						<option value="other">Other (no checking)</option>
-						<option value="dactylic">Dactylic</option>
-						<option value="iambo-trochaic">Iambo-trochaic</option>
-					</select>
-				</div>
 				<div id="editor"></div>
 			</div>
 

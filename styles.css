@@ -168,11 +168,10 @@ button:hover {
 
 #editor-container {
 	background-color: white;
-	padding: 50vh 30px;
+	padding: 50vh 2rem;
 	border-radius: 0;
 	box-shadow: none;
-	max-width: 900px;
-	margin: 0 auto;
+	width: calc(100vw - 250px);
 	min-height: 100vh;
 }
 
@@ -317,7 +316,7 @@ button:hover {
 }
 
 .meter-selector {
-	margin-bottom: 3rem;
+	margin-top: auto;
 }
 
 .meter-selector label {
@@ -325,18 +324,19 @@ button:hover {
 	margin-bottom: 5px;
 	font-size: 12px;
 	text-transform: uppercase;
-	color: #7f8c8d;
+	color: #95a5a6;
 	font-weight: bold;
 }
 
 .meter-selector select {
 	width: 100%;
 	padding: 8px;
-	border: 1px solid #bdc3c7;
+	border: 1px solid #4a5f7f;
 	border-radius: 4px;
 	font-family: inherit;
 	font-size: 14px;
-	background-color: white;
+	background-color: #34495e;
+	color: white;
 }
 
 .text-row {
