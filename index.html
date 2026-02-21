@@ -16,6 +16,7 @@
 
 			<div class="button-group">
 				<button class="primary-btn" onclick="uploadText()">Upload plain text (.txt)</button>
+				<button class="primary-btn" onclick="openMeteratorText()">Open meterator text (.mtr.txt)</button>
 				<button class="primary-btn" onclick="showPasteModal()">Paste in text</button>
 				<div class="button-row">
 					<button class="secondary-btn" onclick="copyCurrent()" id="copy-btn" disabled>
@@ -39,9 +40,10 @@
 			<h2>Saved Texts</h2>
 			<div id="text-list"></div>
 
-			<input type="file" id="file-input" accept=".txt" onchange="handleFileUpload(event)"/>
+			<input type="file" id="file-input" accept=".txt" onchange="handleFileUpload(event)" style="display:none"/>
+		<input type="file" id="mtr-file-input" accept=".txt" onchange="handleMtrFileUpload(event)" style="display:none"/>
 
-			<div class="meter-selector" id="meter-selector" style="display: none">
+			<div class="meter-selector" id="meter-selector">
 				<label>For simple error-checking, select meter</label>
 				<select id="meter-type" onchange="changeMeter()">
 					<option value="other">Other (no checking)</option>

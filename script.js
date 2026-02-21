@@ -59,7 +59,118 @@ function uploadText() {
 	document.getElementById("file-input").click();
 }
 
+function openMeteratorText() {
+	document.getElementById("mtr-file-input").click();
+}
+
+function handleMtrFileUpload(event) {
+	const file = event.target.files[0];
+	if (!file) return;
+
+	const reader = new FileReader();
+	reader.onload = (e) => {
+		const raw = e.target.result;
+		// The .mtr.txt format is: marks line, text line, blank line, repeat.
+		// Parse it back into plain content + marks object.
+		const lines = raw.split("\n");
+		const contentLines = [];
+		const marksMap = {};
+		let lineIndex = 0; // index into contentLines
+
+		let i = 0;
+		while (i < lines.length) {
+			// Skip truly blank lines between pairs (stanza separators)
+			if (lines[i] === "") {
+				i++;
+				continue;
+			}
+			// Expect: marks line, then text line (marks line may be all spaces for unscanned lines)
+			const marksLine = lines[i] ?? "";
+			const textLine = lines[i + 1] ?? "";
+			i += 2;
+
+			// Skip if both are empty (trailing newlines at end of file)
+			if (marksLine === "" && textLine === "") continue;
+
+			contentLines.push(textLine);
+			marksMap[lineIndex] = marksLine;
+			lineIndex++;
+		}
+
+		const content = contentLines.join("\n").replace(/&nbsp;/g, " ").replace(/\u00A0/g, " ");
+		const textId = Date.now().toString();
+		const texts = loadSavedTexts();
+
+		texts[textId] = {
+			name: file.name,
+			content: content,
+			marks: {},
+		};
+
+		saveTexts(texts);
+
+		// Load the text so syllablePositions are built, then apply marks
+		loadText(textId);
+
+		// Now align marks from the marks lines to syllable positions
+		const reverseSymbolMap = {
+			"\u2012": "-",
+			"\u222A": "u",
+			"\u00D7": "x",
+		};
+
+		const combiningRe = /[\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/;
+
+		syllablePositions.forEach((lineData, li) => {
+			const marksLine = marksMap[li] ?? "";
+			const textLine = lineData.lineText;
+
+			const isDebugLine = textLine.includes("perd\u0101t") || textLine.includes("nimis\u0306");
+
+			// Build a map from visual column -> mark character from the marks line.
+			const markAtVisualCol = {};
+			for (let mi = 0; mi < marksLine.length; mi++) {
+				const c = marksLine[mi];
+				if (c !== " " && c !== "\t") {
+					markAtVisualCol[mi] = c;
+				}
+			}
+
+			if (isDebugLine) {
+				console.log(`[DEBUG li=${li}] textLine: ${JSON.stringify(textLine)}`);
+				console.log(`[DEBUG li=${li}] marksLine: ${JSON.stringify(marksLine)}`);
+				console.log(`[DEBUG li=${li}] markAtVisualCol:`, JSON.stringify(markAtVisualCol));
+			}
+
+			// For each syllable position (raw index into text), find its visual column,
+			// then look up what mark (if any) sits at that visual column.
+			lineData.positions.forEach((pos, pi) => {
+				let visualCol = 0;
+				for (let ci = 0; ci < pos.index; ci++) {
+					if (!combiningRe.test(textLine[ci])) visualCol++;
+				}
+				const markChar = markAtVisualCol[visualCol];
+				if (isDebugLine) {
+					console.log(`[DEBUG li=${li} pi=${pi}] char=${JSON.stringify(pos.char)} rawIdx=${pos.index} visualCol=${visualCol} mark=${JSON.stringify(markChar ?? null)}`);
+				}
+				if (markChar) {
+					const markKey = `${li}-${pi}`;
+					currentText.marks[markKey] = reverseSymbolMap[markChar] ?? markChar;
+				}
+			});
+		});
+
+		saveCurrentText();
+		renderEditor();
+		renderTextList();
+	};
+	reader.readAsText(file);
+	event.target.value = "";
+}
+
 function cleanText(text) {
+	// Replace &nbsp; entities and non-breaking space characters with regular spaces
+	text = text.replace(/&nbsp;/g, " ").replace(/\u00A0/g, " ");
 	// Split by lines, filter out empty lines, then rejoin
 	// Preserve tabs so scansion marks line up with input
 	return text
@@ -158,7 +269,6 @@ function loadText(textId) {
 	// Load meter setting if saved
 	currentMeter = textData.meter || "other";
 	document.getElementById("meter-type").value = currentMeter;
-	document.getElementById("meter-selector").style.display = "block";
 
 	// Parse text and find syllable positions
 	parseTextForSyllables(textData.content);
@@ -429,11 +539,9 @@ function renderEditor() {
 
 	if (!currentText) {
 		editor.innerHTML = "";
-		document.getElementById("meter-selector").style.display = "none";
 		return;
 	}
 
-	document.getElementById("meter-selector").style.display = "block";
 	editor.innerHTML = "";
 
 	syllablePositions.forEach((lineData, lineIndex) => {
@@ -865,14 +973,17 @@ function downloadCurrent() {
 
 		lineData.positions.forEach((pos, posIndex) => {
 			// Add the actual characters (including tabs) before this mark
+			// Skip combining characters so mark positions align with pos.index on read-back
 			const charsBeforeMark = lineData.lineText.substring(
 				lastIndex,
 				pos.index,
 			);
-			// Replace each character with space, but preserve tabs and treat emdashes as two spaces
 			const spacing = charsBeforeMark
 				.split("")
-				.map((c) => (c === "\t" ? "\t" : c === "—" ? " " : " "))
+				.map((c) => {
+					if (/[\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/.test(c)) return "";
+					return c === "\t" ? "\t" : c === "—" ? " " : " ";
+				})
 				.join("");
 			marksLine += spacing;
 
@@ -917,7 +1028,8 @@ function downloadCurrent() {
 	const seconds = String(now.getSeconds()).padStart(2, '0');
 	const timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
 
-	const filename = `${timestamp}_${currentText.name}`;
+	const baseName = currentText.name.replace(/\.mtr\.txt$|\.txt$/, "");
+	const filename = `${timestamp}_${baseName}.mtr.txt`;
 
 	const blob = new Blob([output], { type: "text/plain" });
 	const url = URL.createObjectURL(blob);
@@ -1010,14 +1122,17 @@ function copyCurrent() {
 
 		lineData.positions.forEach((pos, posIndex) => {
 			// Add the actual characters (including tabs) before this mark
+			// Skip combining characters so mark positions align with pos.index on read-back
 			const charsBeforeMark = lineData.lineText.substring(
 				lastIndex,
 				pos.index,
 			);
-			// Replace each character with space, but preserve tabs and treat emdashes as two spaces
 			const spacing = charsBeforeMark
 				.split("")
-				.map((c) => (c === "\t" ? "\t" : c === "—" ? " " : " "))
+				.map((c) => {
+					if (/[\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]/.test(c)) return "";
+					return c === "\t" ? "\t" : c === "—" ? " " : " ";
+				})
 				.join("");
 			marksLine += spacing;
 
