@@ -487,7 +487,22 @@ function parseTextForSyllables(text) {
 		const positions = [];
 		let i = 0;
 
+		// Find the indices of the first and second tab so we only scan vowels
+		// in the segment between them (the actual scansion text column).
+		const firstTab = line.indexOf("\t");
+		const secondTab = firstTab === -1 ? -1 : line.indexOf("\t", firstTab + 1);
+
 		while (i < line.length) {
+			// Skip characters before the first tab or after the second tab
+			if (firstTab !== -1 && i < firstTab) {
+				i++;
+				continue;
+			}
+			if (secondTab !== -1 && i > secondTab) {
+				i++;
+				continue;
+			}
+
 			// Skip 'u' if it follows 'q' (qu is not a vowel)
 			if (
 				i > 0 &&
